@@ -21,17 +21,25 @@ function searchCountries() {
 		method: 'GET',
     
 		success: showCountriesList
-  
+,
+		error: showEmptyCountriesList
 	});
 
 }
 
 
+function showEmptyCountriesList( err ){
+	countriesList.empty();
+	countriesList.addClass("empty");
+	$('<li>').text("Brak danych").appendTo(countriesList);
+}
+
 
 function showCountriesList(resp) {
   
 	countriesList.empty();
-  
+
+	countriesList.removeClass("empty");
 	resp.forEach(function(item){
     
 		$('<li>').text(item.name + ' (native name: ' + item.nativeName + '), capital: ' + item.capital + ', timezones: ' + item.timezones + ', currency: ' + item.currencies[0].name + ' (' + item.currencies[0].code + ')' + ', borders: ' + item.borders).appendTo(countriesList);
